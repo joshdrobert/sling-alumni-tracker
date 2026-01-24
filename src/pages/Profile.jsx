@@ -65,7 +65,12 @@ export default function Profile() {
         if (error) {
             alert(error.message)
         } else {
-            alert('Profile updated successfully!')
+            const isOnboarding = new URLSearchParams(window.location.search).get('onboarding')
+            if (isOnboarding) {
+                window.location.href = '/'
+            } else {
+                alert('Profile updated successfully!')
+            }
         }
         setUpdating(false)
     }
@@ -83,9 +88,18 @@ export default function Profile() {
         )
     }
 
+    const isOnboarding = new URLSearchParams(window.location.search).get('onboarding')
+
     return (
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <h1 style={{ marginBottom: '2rem' }}>Edit Profile</h1>
+            {isOnboarding ? (
+                <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                    <h1 style={{ marginBottom: '1rem', color: '#38bdf8' }}>Welcome to Sling Alumni!</h1>
+                    <p style={{ color: '#cbd5e1' }}>Please complete your profile to join the directory.</p>
+                </div>
+            ) : (
+                <h1 style={{ marginBottom: '2rem' }}>Edit Profile</h1>
+            )}
 
             <div className="glass-panel" style={{ padding: '2rem' }}>
                 {loading ? (

@@ -5,10 +5,40 @@ import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Admin from './pages/Admin'
 import PublicProfile from './pages/PublicProfile'
+import { useState, useEffect } from 'react'
 import { supabase } from './lib/supabase'
 import './styles.css'
 
 function App() {
+    const [session, setSession] = useState(null)
+
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session)
+            if (session) checkOnboarding(session)
+        })
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session)
+            if (session) checkOnboarding(session)
+        })
+
+        return () => subscription.unsubscribe()
+    }, [])
+
+    async function checkOnboarding(session) {
+        const { data } = await supabase
+            .from('profiles')
+            .select('first_name')
+            .eq('id', session.user.id)
+            .single()
+
+        // If no name, and we aren't already on the profile page, redirect
+        if (!data?.first_name && window.location.pathname !== '/profile') {
+            window.location.href = '/profile?onboarding=true'
+        }
+    }
+
     if (!supabase) {
         return (
             <div className="container" style={{ textAlign: 'center', marginTop: '4rem' }}>
