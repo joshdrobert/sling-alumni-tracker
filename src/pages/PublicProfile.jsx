@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 import { ArrowLeft, MapPin, Briefcase, Linkedin, Mail, Calendar, User } from 'lucide-react'
 
 export default function PublicProfile() {
     const { id } = useParams()
+    const { session } = useAuth()
     const [profile, setProfile] = useState(null)
     const [loading, setLoading] = useState(true)
 
@@ -93,13 +95,23 @@ export default function PublicProfile() {
 
                     {/* Contact Column */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <Mail color="#94a3b8" />
-                            <div>
-                                <small style={{ display: 'block', color: '#94a3b8' }}>Email</small>
-                                <a href={`mailto:${profile.email}`} style={{ color: 'var(--primary)' }}>{profile.email}</a>
+                        {session ? (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                <Mail color="#94a3b8" />
+                                <div>
+                                    <small style={{ display: 'block', color: '#94a3b8' }}>Email</small>
+                                    <a href={`mailto:${profile.email}`} style={{ color: 'var(--primary)' }}>{profile.email}</a>
+                                </div>
                             </div>
-                        </div>
+                        ) : (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                <Mail color="#94a3b8" />
+                                <div>
+                                    <small style={{ display: 'block', color: '#94a3b8' }}>Email</small>
+                                    <span style={{ color: '#cbd5e1', fontStyle: 'italic' }}>Login to view</span>
+                                </div>
+                            </div>
+                        )}
 
                         {profile.linkedin_url && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
