@@ -85,7 +85,7 @@ export default function PublicProfile() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                             <Calendar color="#94a3b8" />
                             <div>
-                                <small style={{ display: 'block', color: '#94a3b8' }}>Cohort Year</small>
+                                <small style={{ display: 'block', color: '#94a3b8' }}>Cohort Year(s)</small>
                                 <span>{profile.cohort_year || 'Unknown'}</span>
                             </div>
                         </div>

@@ -71,7 +71,7 @@ export default function Home() {
                                     <h3 style={{ margin: 0, fontSize: '1.2rem' }}>
                                         {profile.first_name || 'Anonymous'} {profile.last_name || 'Alumnus'}
                                     </h3>
-                                    <span style={{ fontSize: '0.9rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{profile.role} {profile.cohort_year && `'${profile.cohort_year.toString().slice(-2)}`}</span>
+                                    <span style={{ fontSize: '0.9rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{profile.role} {profile.cohort_year && `• ${profile.cohort_year}`}</span>
                                 </div>
                             </div>
 

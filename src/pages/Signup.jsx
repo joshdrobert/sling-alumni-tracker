@@ -12,7 +12,7 @@ export default function Signup() {
         last_name: '',
         profession_title: '',
         team_affiliation: '',
-        cohort_year: new Date().getFullYear(),
+        cohort_year: '',
         phone_number: '',
         linkedin_url: '',
         bio: ''
@@ -110,9 +110,9 @@ export default function Signup() {
                             </div>
                         </div>
                         <div>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Sling Health Year</label>
+                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Sling Health Year(s)</label>
                             <div style={{ position: 'relative' }}>
-                                <input type="number" name="cohort_year" value={formData.cohort_year} onChange={handleChange} />
+                                <input type="text" name="cohort_year" placeholder="e.g. 2023, 2024" value={formData.cohort_year} onChange={handleChange} />
                                 <Calendar size={18} color="#94a3b8" style={{ position: 'absolute', right: '12px', top: '12px' }} />
                             </div>
                         </div>

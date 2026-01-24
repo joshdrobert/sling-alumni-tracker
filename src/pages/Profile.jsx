@@ -14,7 +14,7 @@ export default function Profile() {
         team_affiliation: '',
         bio: '',
         linkedin_url: '',
-        cohort_year: new Date().getFullYear(),
+        cohort_year: '',
         major: ''
     })
 
@@ -42,7 +42,7 @@ export default function Profile() {
                 team_affiliation: data.team_affiliation || '',
                 bio: data.bio || '',
                 linkedin_url: data.linkedin_url || '',
-                cohort_year: data.cohort_year || new Date().getFullYear(),
+                cohort_year: data.cohort_year || '',
                 major: data.major || ''
             })
         }
@@ -149,10 +149,11 @@ export default function Profile() {
                                 />
                             </div>
                             <div>
-                                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Cohort Year</label>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Cohort Year(s)</label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     name="cohort_year"
+                                    placeholder="e.g. 2023, 2024"
                                     value={formData.cohort_year}
                                     onChange={handleChange}
                                 />

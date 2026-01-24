@@ -14,7 +14,7 @@ create table public.profiles (
   bio text,
   
   -- Alumni specific
-  cohort_year int,
+  cohort_year text, -- Changed to text to support multiple years (e.g. "2022, 2023")
   team_affiliation text,
   profession_title text, -- Primary profession title if simple
   availability boolean default false,
@@ -141,7 +141,7 @@ begin
     new.raw_user_meta_data->>'last_name',
     new.raw_user_meta_data->>'profession_title',
     new.raw_user_meta_data->>'team_affiliation',
-    (new.raw_user_meta_data->>'cohort_year')::int,
+    new.raw_user_meta_data->>'cohort_year',
     new.raw_user_meta_data->>'bio',
     new.raw_user_meta_data->>'linkedin_url',
     new.raw_user_meta_data->>'phone_number'
