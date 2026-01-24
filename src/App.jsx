@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
+import Admin from './pages/Admin'
 import { supabase } from './lib/supabase'
 import './styles.css'
 
@@ -40,6 +41,7 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/admin" element={<Admin />} />
                     </Routes>
                 </main>
             </div>

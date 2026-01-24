@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 
@@ -6,6 +7,18 @@ import { Rocket as RocketIcon, User as UserIcon, LogOut, LogIn } from 'lucide-re
 
 export default function Navbar() {
     const { session } = useAuth()
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    useEffect(() => {
+        if (session) {
+            supabase
+                .from('profiles')
+                .select('role')
+                .eq('id', session.user.id)
+                .single()
+                .then(({ data }) => setIsAdmin(data?.role === 'admin'))
+        }
+    }, [session])
 
     const handleLogout = async () => {
         await supabase.auth.signOut()
@@ -24,6 +37,11 @@ export default function Navbar() {
 
                     {session ? (
                         <>
+                            {isAdmin && (
+                                <Link to="/admin" className="btn btn-secondary">
+                                    Admin
+                                </Link>
+                            )}
                             <Link to="/profile" className="btn btn-secondary">
                                 <UserIcon size={18} />
                                 Profile

@@ -83,6 +83,15 @@ create policy "Users can update own profile"
   on profiles for update
   using ( auth.uid() = id );
 
+create policy "Admins can update any profile"
+  on profiles for update
+  using ( 
+    exists (
+      select 1 from profiles
+      where id = auth.uid() and role = 'admin'
+    )
+  );
+
 -- Experiences: Public read, Authenticated create (for suggestions?), Admin manage
 create policy "Experiences are viewable by everyone"
   on experiences for select
