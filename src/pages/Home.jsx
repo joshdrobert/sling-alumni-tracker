@@ -65,10 +65,12 @@ export default function Home() {
                         <div key={profile.id} className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                 <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #818cf8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', fontWeight: 'bold' }}>
-                                    {profile.first_name?.[0]}{profile.last_name?.[0]}
+                                    {profile.first_name?.[0] || '?'}{profile.last_name?.[0] || '?'}
                                 </div>
                                 <div>
-                                    <h3 style={{ margin: 0, fontSize: '1.2rem' }}>{profile.first_name} {profile.last_name}</h3>
+                                    <h3 style={{ margin: 0, fontSize: '1.2rem' }}>
+                                        {profile.first_name || 'Anonymous'} {profile.last_name || 'Alumnus'}
+                                    </h3>
                                     <span style={{ fontSize: '0.9rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{profile.role} {profile.cohort_year && `'${profile.cohort_year.toString().slice(-2)}`}</span>
                                 </div>
                             </div>
@@ -95,9 +97,9 @@ export default function Home() {
                             )}
 
                             <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--glass-border)' }}>
-                                <button className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }} onClick={() => alert('View details not implemented in this demo')}>
+                                <a href={`/user/${profile.id}`} className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center', textDecoration: 'none' }}>
                                     View Profile
-                                </button>
+                                </a>
                             </div>
                         </div>
                     ))}
