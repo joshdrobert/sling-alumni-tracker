@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
-import { Save, User } from 'lucide-react'
+import { Save, User, GraduationCap } from 'lucide-react'
+import { UNIVERSITIES } from '../lib/constants'
 
 export default function Profile() {
     const { session } = useAuth()
@@ -15,7 +16,8 @@ export default function Profile() {
         bio: '',
         linkedin_url: '',
         cohort_year: '',
-        major: ''
+        major: '',
+        university: ''
     })
 
     useEffect(() => {
@@ -43,7 +45,8 @@ export default function Profile() {
                 bio: data.bio || '',
                 linkedin_url: data.linkedin_url || '',
                 cohort_year: data.cohort_year || '',
-                major: data.major || ''
+                major: data.major || '',
+                university: data.university || ''
             })
         }
         setLoading(false)
@@ -160,6 +163,46 @@ export default function Profile() {
                             </div>
                         </div>
 
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginTop: '1.5rem' }}>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>University / Chapter</label>
+                                <div style={{ position: 'relative' }}>
+                                    <select
+                                        name="university"
+                                        value={formData.university}
+                                        onChange={handleChange}
+                                        style={{
+                                            width: '100%',
+                                            padding: '12px',
+                                            paddingLeft: '12px',
+                                            borderRadius: '8px',
+                                            border: '1px solid var(--glass-border)',
+                                            background: 'rgba(255, 255, 255, 0.05)',
+                                            color: formData.university ? 'white' : '#94a3b8',
+                                            appearance: 'none',
+                                            height: '46px'
+                                        }}
+                                    >
+                                        <option value="" disabled>Select University</option>
+                                        {UNIVERSITIES.map(uni => (
+                                            <option key={uni} value={uni} style={{ color: 'black' }}>{uni}</option>
+                                        ))}
+                                    </select>
+                                    <GraduationCap size={18} color="#94a3b8" style={{ position: 'absolute', right: '12px', top: '14px', pointerEvents: 'none' }} />
+                                </div>
+                            </div>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>LinkedIn URL</label>
+                                <input
+                                    type="url"
+                                    name="linkedin_url"
+                                    value={formData.linkedin_url}
+                                    onChange={handleChange}
+                                    placeholder="https://linkedin.com/in/..."
+                                />
+                            </div>
+                        </div>
+
                         <div style={{ margin: '1.5rem 0' }}>
                             <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Bio</label>
                             <textarea
@@ -171,16 +214,7 @@ export default function Profile() {
                             />
                         </div>
 
-                        <div style={{ margin: '1.5rem 0' }}>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>LinkedIn URL</label>
-                            <input
-                                type="url"
-                                name="linkedin_url"
-                                value={formData.linkedin_url}
-                                onChange={handleChange}
-                                placeholder="https://linkedin.com/in/..."
-                            />
-                        </div>
+
 
                         <button className="btn" disabled={updating}>
                             <Save size={18} />

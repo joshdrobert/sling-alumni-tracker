@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { Link } from 'react-router-dom'
-import { Mail, Lock, User, Briefcase, MapPin, Calendar, Linkedin, Phone } from 'lucide-react'
+import { Mail, Lock, User, Briefcase, MapPin, Calendar, Linkedin, Phone, GraduationCap } from 'lucide-react'
+import { UNIVERSITIES } from '../lib/constants'
 
 export default function Signup() {
     const [loading, setLoading] = useState(false)
@@ -15,7 +16,8 @@ export default function Signup() {
         cohort_year: '',
         phone_number: '',
         linkedin_url: '',
-        bio: ''
+        bio: '',
+        university: ''
     })
 
     const handleChange = (e) => {
@@ -39,7 +41,8 @@ export default function Signup() {
                     cohort_year: formData.cohort_year,
                     phone_number: formData.phone_number,
                     linkedin_url: formData.linkedin_url,
-                    bio: formData.bio
+                    bio: formData.bio,
+                    university: formData.university
                 }
             }
         })
@@ -118,12 +121,34 @@ export default function Signup() {
                         </div>
                     </div>
 
-                    <div style={{ margin: '1rem 0' }}>
-                        <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Bio</label>
-                        <textarea rows={3} name="bio" placeholder="Short bio..." value={formData.bio} onChange={handleChange} />
-                    </div>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginTop: '1.5rem' }}>
+                        <div>
+                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>University / Chapter</label>
+                            <div style={{ position: 'relative' }}>
+                                <select
+                                    name="university"
+                                    required
+                                    value={formData.university}
+                                    onChange={handleChange}
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px',
+                                        paddingLeft: '12px', /* Standard padding */
+                                        borderRadius: '8px',
+                                        border: '1px solid var(--glass-border)',
+                                        background: 'rgba(255, 255, 255, 0.05)',
+                                        color: formData.university ? 'white' : '#94a3b8',
+                                        appearance: 'none'
+                                    }}
+                                >
+                                    <option value="" disabled>Select University</option>
+                                    {UNIVERSITIES.map(uni => (
+                                        <option key={uni} value={uni} style={{ color: 'black' }}>{uni}</option>
+                                    ))}
+                                </select>
+                                <GraduationCap size={18} color="#94a3b8" style={{ position: 'absolute', right: '12px', top: '12px', pointerEvents: 'none' }} />
+                            </div>
+                        </div>
                         <div>
                             <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>LinkedIn URL</label>
                             <div style={{ position: 'relative' }}>
@@ -131,12 +156,18 @@ export default function Signup() {
                                 <Linkedin size={18} color="#94a3b8" style={{ position: 'absolute', right: '12px', top: '12px' }} />
                             </div>
                         </div>
-                        <div>
-                            <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Phone (Optional)</label>
-                            <div style={{ position: 'relative' }}>
-                                <input type="tel" name="phone_number" value={formData.phone_number} onChange={handleChange} />
-                                <Phone size={18} color="#94a3b8" style={{ position: 'absolute', right: '12px', top: '12px' }} />
-                            </div>
+                    </div>
+
+                    <div style={{ marginTop: '1rem' }}>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Bio</label>
+                        <textarea rows={3} name="bio" placeholder="Short bio..." value={formData.bio} onChange={handleChange} />
+                    </div>
+
+                    <div style={{ marginTop: '1rem' }}>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', color: '#94a3b8' }}>Phone (Optional)</label>
+                        <div style={{ position: 'relative' }}>
+                            <input type="tel" name="phone_number" value={formData.phone_number} onChange={handleChange} />
+                            <Phone size={18} color="#94a3b8" style={{ position: 'absolute', right: '12px', top: '12px' }} />
                         </div>
                     </div>
 
